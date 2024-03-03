@@ -7,5 +7,5 @@ data "github_release" "this" {
   repository = "tenminutevpn"
 
   retrieve_by = "tag"
-  release_tag = "v0.1.0rc0"
+  release_tag = var.version
 }
