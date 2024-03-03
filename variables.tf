@@ -1,7 +1,7 @@
-variable "region" {
+variable "tenminutevpn_region" {
   type    = string
 }
 
-variable "version" {
+variable "tenminutevpn_version" {
   type    = string
 }

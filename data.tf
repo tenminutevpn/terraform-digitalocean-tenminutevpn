@@ -1,5 +1,5 @@
 data "digitalocean_region" "this" {
-  slug = var.region
+  slug = var.tenminutevpn_region
 }
 
 data "github_release" "this" {
@@ -7,5 +7,5 @@ data "github_release" "this" {
   repository = "tenminutevpn"
 
   retrieve_by = "tag"
-  release_tag = var.version
+  release_tag = var.tenminutevpn_version
 }
