@@ -94,6 +94,6 @@ resource "ssh_resource" "this" {
   retry_delay = "5s"
 
   commands = [
-    "echo 'Hello, World!'",
+    "cat /root/.wireguard/client.conf",
   ]
 }
