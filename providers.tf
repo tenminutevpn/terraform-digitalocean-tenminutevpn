@@ -1,5 +1,5 @@
 terraform {
-  required_version = "1.5.6"
+  required_version = "~> 1.6.0"
 
   required_providers {
     digitalocean = {
@@ -8,7 +8,7 @@ terraform {
     }
     github = {
       source  = "integrations/github"
-      version = "~> 5.0"
+      version = "~> 6.0"
     }
     tls = {
       source  = "hashicorp/tls"

@@ -6,7 +6,7 @@ resource "digitalocean_vpc" "this" {
 
 resource "digitalocean_custom_image" "this" {
   name         = "tenminutevpn"
-  url          = one([for item in data.github_release.this.assets : item if item.name == "tenminutevpn.raw.gz"]).browser_download_url
+  url          = one([for item in data.github_release.this.assets : item if item.name == "tenminutevpn-amd64.raw.gz"]).browser_download_url
   distribution = "Debian"
   regions      = [data.digitalocean_region.this.slug]
 
@@ -59,6 +59,23 @@ resource "digitalocean_firewall" "this" {
     source_addresses = ["0.0.0.0/0", "::/0"]
   }
 
+  inbound_rule {
+    protocol         = "udp"
+    port_range       = "51820"
+    source_addresses = ["0.0.0.0/0", "::/0"]
+  }
+
+  inbound_rule {
+    protocol         = "tcp"
+    port_range       = "3128"
+    source_addresses = ["0.0.0.0/0", "::/0"]
+  }
+
+  inbound_rule {
+    protocol         = "icmp"
+    source_addresses = ["0.0.0.0/0", "::/0"]
+  }
+
   outbound_rule {
     protocol              = "tcp"
     port_range            = "1-65535"
@@ -88,6 +105,6 @@ resource "ssh_resource" "this" {
   retry_delay = "5s"
 
   commands = [
-    "echo 'Hello, World!'",
+    "cat /etc/wireguard/peer-1.conf",
   ]
 }
