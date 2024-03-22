@@ -37,6 +37,7 @@ resource "digitalocean_droplet" "this" {
   backups       = false
   monitoring    = false
   resize_disk   = false
+  user_data     = data.cloudinit_config.this.rendered
 
   ssh_keys = [
     digitalocean_ssh_key.this.fingerprint,
@@ -105,6 +106,6 @@ resource "ssh_resource" "this" {
   retry_delay = "5s"
 
   commands = [
-    "cat /etc/wireguard/peer-1.conf",
+    "cat /etc/wireguard/peers/peer-0.conf",
   ]
 }

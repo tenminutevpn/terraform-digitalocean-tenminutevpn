@@ -1,7 +1,7 @@
 variable "tenminutevpn_region" {
-  type    = string
+  type = string
 }
 
 variable "tenminutevpn_version" {
-  type    = string
+  type = string
 }
