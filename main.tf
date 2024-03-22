@@ -106,6 +106,6 @@ resource "ssh_resource" "this" {
   retry_delay = "5s"
 
   commands = [
-    "cat /etc/wireguard/peers/peer-1.conf",
+    "cat /etc/wireguard/peers/peer-0.conf",
   ]
 }

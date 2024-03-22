@@ -3,7 +3,7 @@ output "ipv4_address" {
 }
 
 output "ssh_private_key" {
-  value = tls_private_key.this.private_key_openssh
+  value     = tls_private_key.this.private_key_openssh
   sensitive = true
 }
 
@@ -12,6 +12,6 @@ output "ssh_public_key" {
 }
 
 output "wireguard" {
-  value = ssh_resource.this.result
+  value     = ssh_resource.this.result
   sensitive = true
 }
