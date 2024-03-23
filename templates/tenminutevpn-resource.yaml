@@ -1,0 +1,8 @@
+#cloud-config
+
+write_files:
+  - path: ${path}
+    permissions: "0644"
+    owner: root:root
+    content: |
+      ${indent(6, content)}
