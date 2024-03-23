@@ -59,7 +59,7 @@ data "cloudinit_config" "this" {
     filename     = "01-squid.yaml"
     content_type = "text/cloud-config"
     content = templatefile("${path.module}/templates/tenminutevpn-resource.yaml", {
-      path    = "/etc/tenminutevpn/01-squid.yaml",
+      path    = "/etc/tenminutevpn/squid.yaml",
       content = yamlencode(local.squid),
     })
   }
@@ -68,7 +68,7 @@ data "cloudinit_config" "this" {
     filename     = "02-wireguard.yaml"
     content_type = "text/cloud-config"
     content = templatefile("${path.module}/templates/tenminutevpn-resource.yaml", {
-      path    = "/etc/tenminutevpn/02-wireguard.yaml",
+      path    = "/etc/tenminutevpn/wireguard.yaml",
       content = yamlencode(local.wireguard),
     })
   }
