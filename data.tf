@@ -20,7 +20,7 @@ locals {
       }
     }
     spec = {
-      port = 3128
+      port = var.squid_port
     }
   }
 
@@ -36,11 +36,8 @@ locals {
     spec = {
       device  = "wg0"
       address = "100.96.0.1/24"
-      port    = 51820
-      dns = [
-        "8.8.8.8",
-        "1.1.1.1"
-      ]
+      port    = var.wireguard_port
+      dns     = var.wireguard_dns
       peers = [
         {
           allowedips = ["100.96.0.5/32"]

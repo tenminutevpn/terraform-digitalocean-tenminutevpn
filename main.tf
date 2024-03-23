@@ -62,13 +62,13 @@ resource "digitalocean_firewall" "this" {
 
   inbound_rule {
     protocol         = "udp"
-    port_range       = "51820"
+    port_range       = var.wireguard_port
     source_addresses = ["0.0.0.0/0", "::/0"]
   }
 
   inbound_rule {
     protocol         = "tcp"
-    port_range       = "3128"
+    port_range       = var.squid_port
     source_addresses = ["0.0.0.0/0", "::/0"]
   }
 
