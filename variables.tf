@@ -16,7 +16,7 @@ variable "wireguard_port" {
   default = 51820
 }
 
-variable "wireguard_dns" {
+variable "dns" {
   type    = list(string)
   default = ["1.1.1.1", "1.0.0.1"]
 }

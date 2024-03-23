@@ -11,7 +11,7 @@ resource "digitalocean_custom_image" "this" {
   regions      = [data.digitalocean_region.this.slug]
 
   timeouts {
-    create = "15m"
+    create = "30m"
   }
 }
 
@@ -27,7 +27,7 @@ resource "digitalocean_ssh_key" "this" {
 resource "digitalocean_droplet" "this" {
   name  = "tenminutevpn"
   image = digitalocean_custom_image.this.id
-  size  = "s-1vcpu-512mb-10gb"
+  size  = "s-1vcpu-1gb"
 
   region   = data.digitalocean_region.this.slug
   vpc_uuid = digitalocean_vpc.this.id

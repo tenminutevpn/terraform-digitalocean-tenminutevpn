@@ -11,18 +11,6 @@ data "github_release" "this" {
 }
 
 locals {
-  squid = {
-    kind = "squid/v1"
-    metadata = {
-      name = "squid"
-      annotations = {
-        "tenminutevpn.com/config-dir" = "/etc/squid/"
-      }
-    }
-    spec = {
-      port = var.squid_port
-    }
-  }
 
   wireguard = {
     kind = "wireguard/v1"
@@ -37,7 +25,7 @@ locals {
       device  = "wg0"
       address = "100.96.0.1/24"
       port    = var.wireguard_port
-      dns     = var.wireguard_dns
+      dns     = "100.96.0.1"
       peers = [
         {
           allowedips = ["100.96.0.5/32"]
@@ -46,6 +34,29 @@ locals {
     }
   }
 
+  dnsmasq = {
+    kind = "dnsmasq/v1"
+    metadata = {
+      name = "dnsmasq"
+    }
+    spec = {
+      interface = "wg0"
+      server    = var.dns
+    }
+  }
+
+  squid = {
+    kind = "squid/v1"
+    metadata = {
+      name = "squid"
+      annotations = {
+        "tenminutevpn.com/config-dir" = "/etc/squid/"
+      }
+    }
+    spec = {
+      port = var.squid_port
+    }
+  }
 }
 
 data "cloudinit_config" "this" {
@@ -53,20 +64,29 @@ data "cloudinit_config" "this" {
   base64_encode = false
 
   part {
-    filename     = "01-squid.yaml"
+    filename     = "01-wireguard.yaml"
     content_type = "text/cloud-config"
     content = templatefile("${path.module}/templates/tenminutevpn-resource.yaml", {
-      path    = "/etc/tenminutevpn/squid.yaml",
-      content = yamlencode(local.squid),
+      path    = "/etc/tenminutevpn/01-wireguard.yaml",
+      content = yamlencode(local.wireguard),
     })
   }
 
   part {
-    filename     = "02-wireguard.yaml"
+    filename     = "02-dnsmasq.yaml"
     content_type = "text/cloud-config"
     content = templatefile("${path.module}/templates/tenminutevpn-resource.yaml", {
-      path    = "/etc/tenminutevpn/wireguard.yaml",
-      content = yamlencode(local.wireguard),
+      path    = "/etc/tenminutevpn/02-dnsmasq.yaml",
+      content = yamlencode(local.dnsmasq),
+    })
+  }
+
+  part {
+    filename     = "03-squid.yaml"
+    content_type = "text/cloud-config"
+    content = templatefile("${path.module}/templates/tenminutevpn-resource.yaml", {
+      path    = "/etc/tenminutevpn/03-squid.yaml",
+      content = yamlencode(local.squid),
     })
   }
 
